@@ -42,9 +42,9 @@ data['Blog Content'].forEach(b => {
   });
 });
 
-function fetchPage(pathUrl) {
+function fetchPage(port, pathUrl) {
   return new Promise((resolve, reject) => {
-    http.get(`http://localhost:3000${pathUrl}`, res => {
+    http.get(`http://localhost:${port}${pathUrl}`, res => {
       let body = '';
       res.on('data', chunk => body += chunk);
       res.on('end', () => {
@@ -56,16 +56,18 @@ function fetchPage(pathUrl) {
 
 async function runVerification() {
   const server = requestHandler.server;
-  if (!server.listening) {
-    await new Promise(r => server.listen(3000, r));
-  }
-  console.log(`Starting verification of ${testUrls.length} pages...\n`);
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, () => resolve());
+  });
+  const port = server.address().port;
+  console.log(`Starting verification of ${testUrls.length} pages on isolated port ${port}...\n`);
   let passed = 0;
   let failed = 0;
 
   for (const item of testUrls) {
     try {
-      const res = await fetchPage(item.url);
+      const res = await fetchPage(port, item.url);
       if (res.statusCode !== 200) {
         console.error(`FAIL: ${item.url} returned status ${res.statusCode}`);
         failed++;
@@ -95,6 +97,13 @@ async function runVerification() {
         console.warn(`WARN [Phone Link missing]: ${item.url}`);
       }
 
+      // Check Google Search Console verification meta tag
+      if (!res.body.includes('name="google-site-verification" content="VCJGx2cffT1IY6_QZEKkcK4uMx9PGYDzdnZo6sYk5yg"')) {
+        console.error(`FAIL [Google verification tag missing]: ${item.url}`);
+        failed++;
+        continue;
+      }
+
       console.log(`PASS [200 OK]: ${item.type} "${item.pageName}" -> ${item.url}`);
       passed++;
     } catch (e) {
@@ -106,6 +115,8 @@ async function runVerification() {
   console.log(`\n========================================`);
   console.log(`Verification Complete: ${passed} Passed, ${failed} Failed`);
   console.log(`========================================\n`);
+
+  server.close();
 
   if (failed === 0) {
     process.exit(0);

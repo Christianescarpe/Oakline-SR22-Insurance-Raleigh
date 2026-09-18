@@ -201,6 +201,7 @@ function renderFullPage(title, metaDesc, bodyHtml, activeUrl) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="VCJGx2cffT1IY6_QZEKkcK4uMx9PGYDzdnZo6sYk5yg" />
   <title>${title}</title>
   <meta name="description" content="${metaDesc}">
   <link rel="stylesheet" href="/style.css">
