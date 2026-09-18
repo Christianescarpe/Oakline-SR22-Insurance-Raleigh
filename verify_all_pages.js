@@ -1,7 +1,9 @@
 const http = require('http');
 const fs = require('fs');
+const path = require('path');
+const requestHandler = require('./server.js');
 
-const data = JSON.parse(fs.readFileSync('all_sheets_data.json', 'utf8'));
+const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'all_sheets_data.json'), 'utf8'));
 
 // Test URLs list
 const testUrls = [];
@@ -53,6 +55,10 @@ function fetchPage(pathUrl) {
 }
 
 async function runVerification() {
+  const server = requestHandler.server;
+  if (!server.listening) {
+    await new Promise(r => server.listen(3000, r));
+  }
   console.log(`Starting verification of ${testUrls.length} pages...\n`);
   let passed = 0;
   let failed = 0;

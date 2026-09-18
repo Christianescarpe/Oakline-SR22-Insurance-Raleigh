@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 
-const data = JSON.parse(fs.readFileSync('all_sheets_data.json', 'utf8'));
+const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'all_sheets_data.json'), 'utf8'));
 const themeCss = fs.readFileSync(path.join(__dirname, 'oakline-sr22-theme', 'style.css'), 'utf8');
 
 // Map of all SEO pages by URL
@@ -1401,8 +1401,9 @@ const servicesSlugs = [
   '/non-owners-sr22-insurance', '/non-owners-sr22-insurance/'
 ];
 
-const server = http.createServer((req, res) => {
-  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+function requestHandler(req, res) {
+  const host = req.headers && req.headers.host ? req.headers.host : 'localhost:3000';
+  const parsedUrl = new URL(req.url, `http://${host}`);
   let pathname = parsedUrl.pathname;
 
   // Static stylesheet
@@ -1494,23 +1495,25 @@ const server = http.createServer((req, res) => {
   // 404
   res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end(renderNotFound());
-});
+}
 
-module.exports = {
-  server,
-  renderHomePage,
-  renderLocationPage,
-  renderServicesPage,
-  renderStandardPage,
-  renderBlogPost,
-  renderBlogIndex,
-  renderNotFound,
-  seoPagesMap,
-  blogPostsMap,
-  locationSlugs,
-  servicesSlugs,
-  data
-};
+const server = http.createServer(requestHandler);
+
+requestHandler.server = server;
+requestHandler.renderHomePage = renderHomePage;
+requestHandler.renderLocationPage = renderLocationPage;
+requestHandler.renderServicesPage = renderServicesPage;
+requestHandler.renderStandardPage = renderStandardPage;
+requestHandler.renderBlogPost = renderBlogPost;
+requestHandler.renderBlogIndex = renderBlogIndex;
+requestHandler.renderNotFound = renderNotFound;
+requestHandler.seoPagesMap = seoPagesMap;
+requestHandler.blogPostsMap = blogPostsMap;
+requestHandler.locationSlugs = locationSlugs;
+requestHandler.servicesSlugs = servicesSlugs;
+requestHandler.data = data;
+
+module.exports = requestHandler;
 
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
