@@ -1,0 +1,23 @@
+{
+  "name": "oakline-sr22-insurance-raleigh",
+  "version": "1.0.0",
+  "description": "Oakline SR22 Insurance Raleigh website",
+  "main": "server.js",
+  "scripts": {
+    "build": "node build.js",
+    "start": "node server.js",
+    "test": "node verify_all_pages.js"
+  },
+  "keywords": [
+    "sr22",
+    "insurance",
+    "raleigh",
+    "nc"
+  ],
+  "author": "Oakline Insurance",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
