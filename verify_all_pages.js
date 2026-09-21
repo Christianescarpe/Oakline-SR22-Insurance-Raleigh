@@ -104,6 +104,13 @@ async function runVerification() {
         continue;
       }
 
+      // Check Google Map embed in footer
+      if (!res.body.includes('maps/embed?pb=!1m14!1m8!1m3!1d3236.4445834838666')) {
+        console.error(`FAIL [Google Map embed missing]: ${item.url}`);
+        failed++;
+        continue;
+      }
+
       console.log(`PASS [200 OK]: ${item.type} "${item.pageName}" -> ${item.url}`);
       passed++;
     } catch (e) {

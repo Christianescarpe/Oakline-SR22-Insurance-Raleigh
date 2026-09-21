@@ -1100,6 +1100,21 @@ img {
   margin-bottom: 6px;
 }
 
+.footer-map {
+  margin: 40px 0 20px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--dark-border);
+  background: var(--dark-surface);
+}
+
+.footer-map iframe {
+  width: 100% !important;
+  height: 350px !important;
+  border: 0;
+  display: block;
+}
+
 .footer-bottom {
   padding: 24px 0;
   text-align: center;
@@ -1181,5 +1196,8 @@ img {
   }
   .journey-grid, .quote-form-grid, .metrics-grid {
     grid-template-columns: 1fr;
+  }
+  .footer-map iframe {
+    height: 260px !important;
   }
 }

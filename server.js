@@ -186,6 +186,20 @@ function renderFooter() {
         </div>
       </div>
 
+      <!-- Google Maps Embed -->
+      <div class="footer-map" style="margin: 40px 0 20px; border-radius: 12px; overflow: hidden; border: 1px solid #262e3d; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+        <div style="background: #151a23; padding: 12px 20px; border-bottom: 1px solid #262e3d; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 8px; color: #ffffff; font-weight: 600; font-size: 14px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00a877" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Oakline SR22 Insurance Raleigh Office Location</span>
+          </div>
+          <span style="color: #94a3b8; font-size: 13px;">704 Glenwood Ave ste d, Raleigh, NC 27605</span>
+        </div>
+        <div style="position: relative; width: 100%; height: 350px;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3236.4445834838666!2d-78.6467983!3d35.7890175!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89ac5f369e31737f%3A0x95554583c034a8f9!2s!5e0!3m2!1sen!2sph!4v1789980367271!5m2!1sen!2sph" width="600" height="450" style="border:0; width: 100%; height: 100%; display: block;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+
       <div class="footer-bottom">
         <p>&copy; ${new Date().getFullYear()} Oakline SR22 Insurance Raleigh. All rights reserved.</p>
         <p>704 Glenwood Ave ste d, Raleigh, NC 27605 | Phone: <a href="tel:+19842051805">(984) 205-1805</a></p>
